@@ -10,7 +10,6 @@ import sbcLogo from "./assets/sbc-logo.svg";
 import logo from "./assets/logo.png";
 import { useCallback, useEffect, useState } from "react";
 import { CoinflowWithdraw } from "@coinflowlabs/react";
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { PublicKey } from "@solana/web3.js";
 
 function App() {
@@ -68,16 +67,13 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
     const ownedTokenAccounts = await connection.getParsedTokenAccountsByOwner(
       publicKey,
       {
-        // mint: new PublicKey("DBAzBUXaLj1qANCseUPZz4sp9F8d2sc78C4vKjhbTGMA"),
-        programId: TOKEN_PROGRAM_ID,
+        mint: new PublicKey("DBAzBUXaLj1qANCseUPZz4sp9F8d2sc78C4vKjhbTGMA"),
       },
     );
 
     const ownedTokenData = ownedTokenAccounts.value.map(
       (v) => v.account.data.parsed.info,
     );
-
-    console.log(ownedTokenData);
 
     const noSbcAccountFound =
       !ownedTokenData ||
@@ -206,10 +202,7 @@ function CoinflowComponent({ ready }: { ready: boolean }) {
         onSuccess={() => console.log("Withdraw Success")}
         connection={wallet.connection}
         handleHeightChange={handleHeightChange}
-        tokens={[
-          "DBAzBUXaLj1qANCseUPZz4sp9F8d2sc78C4vKjhbTGMA",
-          // "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
-        ]}
+        tokens={["DBAzBUXaLj1qANCseUPZz4sp9F8d2sc78C4vKjhbTGMA"]}
         // tokens={["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"]}
       />
     </div>

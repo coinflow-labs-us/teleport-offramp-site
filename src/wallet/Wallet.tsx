@@ -37,11 +37,7 @@ export function WalletContextProvider({ children }: { children: ReactNode }) {
   const connected = useMemo(() => !!publicKey, [publicKey]);
 
   const connection = useMemo(() => {
-    // "https://api.mainnet-beta.solana.com"
-    return new Connection(
-      "https://rpc.helius.xyz/?api-key=2f915565-3608-4451-9150-4e72f50f10c2",
-      "confirmed",
-    );
+    return new Connection(import.meta.env.VITE_RPC_URL, "confirmed");
   }, []);
 
   const sendTransaction = useCallback(
