@@ -1,0 +1,16 @@
+
+
+.wallet-adapter-dropdown > .wallet-adapter-button {
+
+    background-color: transparent !important;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.wallet-adapter-modal-wrapper {
+    background-color: #0E0F12 !important;
+}
+
+.wallet-adapter-modal-button-close {
+    background-color: #18181B !important;
+}
