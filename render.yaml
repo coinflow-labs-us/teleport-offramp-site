@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: invoice-demo
+    name: sbc-offramp
     env: static
     branch: main
     buildCommand: npm install && npm run build
