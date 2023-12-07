@@ -208,7 +208,7 @@ function CoinflowComponent({ ready }: { ready: boolean }) {
         handleHeightChange={handleHeightChange}
         tokens={[
           "DBAzBUXaLj1qANCseUPZz4sp9F8d2sc78C4vKjhbTGMA",
-          "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+          // "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
         ]}
         // tokens={["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"]}
       />
