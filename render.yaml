@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: sbc-offramp
+    name: usdc-matrica-offramp
     env: static
     branch: main
     buildCommand: npm install && npm run build

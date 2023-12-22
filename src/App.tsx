@@ -6,8 +6,8 @@ import {
 } from "@solana/wallet-adapter-react-ui";
 import { useLocalWallet, WalletContextProvider } from "./wallet/Wallet.tsx";
 import "@solana/wallet-adapter-react-ui/styles.css";
-import sbcLogo from "./assets/sbc-logo.svg";
-import logo from "./assets/logo.png";
+import usdcLogo from "./assets/usdc-logo.png"
+import logo from "./assets/matrica-logo.svg";
 import { useCallback, useEffect, useState } from "react";
 import { CoinflowWithdraw } from "@coinflowlabs/react";
 import { PublicKey } from "@solana/web3.js";
@@ -22,12 +22,12 @@ function App() {
           <WalletContextProvider>
             <div
               className={
-                "w-screen max-w-screen flex flex-col items-center relative bg-black"
+                "w-screen max-w-screen flex flex-col items-center relative bg-slate-900"
               }
             >
               <div
                 className={
-                  "w-screen sticky z-50 backdrop-filter backdrop-blur top-0 right-0 left-0  flex justify-center items-center bg-black/60"
+                  "w-screen sticky z-50 backdrop-filter backdrop-blur top-0 right-0 left-0 flex justify-center items-center bg-slate-900/60"
                 }
               >
                 <div
@@ -37,7 +37,7 @@ function App() {
                 >
                   <img
                     src={logo}
-                    className={"h-10 w-10 object-contain"}
+                    className={"h-5 object-contain"}
                     alt={"logo"}
                   />
                   <WalletMultiButton />
@@ -67,7 +67,7 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
     const ownedTokenAccounts = await connection.getParsedTokenAccountsByOwner(
       publicKey,
       {
-        mint: new PublicKey("DBAzBUXaLj1qANCseUPZz4sp9F8d2sc78C4vKjhbTGMA"),
+        mint: new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"),
       },
     );
 
@@ -75,13 +75,13 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
       (v) => v.account.data.parsed.info,
     );
 
-    const noSbcAccountFound =
+    const noAccountFound =
       !ownedTokenData ||
       ownedTokenData.length === 0 ||
       !ownedTokenData[0] ||
       !ownedTokenData[0].tokenAmount;
 
-    if (noSbcAccountFound) setBalance(0);
+    if (noAccountFound) setBalance(0);
     else setBalance(ownedTokenData[0].tokenAmount.uiAmount);
   }, [publicKey, connection]);
 
@@ -95,8 +95,8 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
     <div
       className={"flex flex-col py-24 space-y-12 items-center relative w-full"}
     >
-      <span className={"text-zinc-200 font-semibold text-base lg:text-lg"}>
-        Withdraw your SBC to a bank or debit card
+      <span className={"text-slate-200 font-semibold text-base lg:text-lg"}>
+        Withdraw USDC to a bank or debit card
       </span>
       <div
         className={
@@ -104,8 +104,8 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
         }
       >
         <img
-          src={sbcLogo}
-          alt={"sbc"}
+          src={usdcLogo}
+          alt={"usdc"}
           className={"h-12 w-12 md:h-16 md:w-16"}
         />
         <BalanceLabel balance={balance} />
@@ -113,20 +113,20 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
       <button
         onClick={() => setReady(true)}
         className={
-          "outline-none hover:bg-indigo-400 transition bg-indigo-500 font-bold text-base text-white rounded-full p-6 px-8 w-min decoration-0 whitespace-nowrap"
+          "outline-none hover:bg-sky-400 transition bg-sky-500 font-bold text-base text-white rounded-full p-6 px-8 w-min decoration-0 whitespace-nowrap"
         }
       >
-        Withdraw my SBC
+        Withdraw my USDC
       </button>
 
       {!publicKey ? (
         <div
           className={
-            "absolute top-0 bottom-0 right-0 left-0 backdrop-blur-2xl bg-black/50 space-y-6 flex flex-col items-center justify-center"
+            "absolute top-0 bottom-0 right-0 left-0 backdrop-blur-2xl bg-slate-900/50 space-y-6 flex flex-col items-center justify-center"
           }
         >
-          <img src={sbcLogo} alt={"sbc"} className={"h-12 w-12"} />
-          <span className={"text-zinc-200 font-semibold text-base"}>
+          <img src={usdcLogo} alt={"usdc"} className={"h-12 w-12"} />
+          <span className={"text-slate-200 font-semibold text-base"}>
             Welcome. Connect your wallet to get started.
           </span>
           <div
@@ -147,10 +147,10 @@ function BalanceLabel({ balance }: { balance: number | null }) {
     return (
       <div className={"flex animate-pulse flex-1"}>
         <div className={"flex flex-col flex-1 space-y-2"}>
-          <span className={"h-6 bg-zinc-800 w-20 rounded-md"} />
-          <span className={"h-4 bg-zinc-900 w-32 rounded"} />
+          <span className={"h-6 bg-slate-800 w-20 rounded-md"} />
+          <span className={"h-4 bg-slate-700 w-32 rounded"} />
         </div>
-        <span className={"h-9 bg-zinc-800 w-20 rounded-lg"} />
+        <span className={"h-9 bg-slate-800 w-20 rounded-lg"} />
       </div>
     );
   }
@@ -158,12 +158,12 @@ function BalanceLabel({ balance }: { balance: number | null }) {
   return (
     <div className={"flex items-center flex-1"}>
       <div className={"flex flex-col flex-1"}>
-        <span className={"text-zinc-100 font-bold text-xl"}>SBC</span>
-        <span className={"text-zinc-400 font-medium text-base"}>
-          {balance.toFixed(4)} SBC
+        <span className={"text-slate-100 font-bold text-xl"}>USDC</span>
+        <span className={"text-slate-400 font-medium text-base"}>
+          {balance.toFixed(4)} USDC
         </span>
       </div>
-      <span className={"text-zinc-50 font-bold text-2xl"}>
+      <span className={"text-slate-50 font-bold text-2xl"}>
         ${balance.toFixed(2)}
       </span>
     </div>
@@ -196,14 +196,13 @@ function CoinflowComponent({ ready }: { ready: boolean }) {
         // @ts-ignore
         wallet={wallet}
         blockchain={"solana"}
-        merchantId={"brale"}
+        merchantId={"matricalabs"}
         env={"prod"}
-        loaderBackground={"#000000"}
+        loaderBackground={"#0f172a"}
         onSuccess={() => console.log("Withdraw Success")}
         connection={wallet.connection}
         handleHeightChange={handleHeightChange}
-        tokens={["DBAzBUXaLj1qANCseUPZz4sp9F8d2sc78C4vKjhbTGMA"]}
-        // tokens={["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"]}
+        tokens={["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"]}
       />
     </div>
   );
