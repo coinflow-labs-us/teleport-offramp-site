@@ -202,7 +202,7 @@ function CoinflowComponent({ ready }: { ready: boolean }) {
         onSuccess={() => console.log("Withdraw Success")}
         connection={wallet.connection}
         handleHeightChange={handleHeightChange}
-        // tokens={["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"]}
+        tokens={["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"]}
       />
     </div>
   );
