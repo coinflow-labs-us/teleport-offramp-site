@@ -44,9 +44,6 @@ export function WalletContextProvider({ children }: { children: ReactNode }) {
     async (transaction: Transaction) => {
       if (!wallet.publicKey || !wallet.signTransaction) return null;
 
-      const latestBlockHash = await connection.getLatestBlockhash("confirmed");
-      transaction.recentBlockhash = latestBlockHash.blockhash;
-      await wallet.signTransaction(transaction);
       return await wallet.sendTransaction(transaction, connection);
     },
     [connection, wallet, wallet.signTransaction],
