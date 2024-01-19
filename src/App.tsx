@@ -1,11 +1,5 @@
 import "./App.css";
-import { WalletProvider } from "@solana/wallet-adapter-react";
-import {
-  WalletModalProvider,
-  WalletMultiButton,
-} from "@solana/wallet-adapter-react-ui";
 import { useLocalWallet, WalletContextProvider } from "./wallet/Wallet.tsx";
-import "@solana/wallet-adapter-react-ui/styles.css";
 import usdcLogo from "./assets/usdc-logo.png"
 import logo from "./assets/matrica-logo.svg";
 import { useCallback, useEffect, useState } from "react";
@@ -17,38 +11,33 @@ function App() {
 
   return (
     <>
-      <WalletProvider wallets={[]} autoConnect>
-        <WalletModalProvider>
-          <WalletContextProvider>
+      <WalletContextProvider>
+        <div
+          className={
+            "w-screen max-w-screen flex flex-col items-center relative bg-slate-900"
+          }
+        >
+          <div
+            className={
+              "w-screen sticky z-50 backdrop-filter backdrop-blur top-0 right-0 left-0 flex justify-center items-center bg-slate-900/60"
+            }
+          >
             <div
               className={
-                "w-screen max-w-screen flex flex-col items-center relative bg-slate-900"
+                "flex justify-between p-4 items-center w-full lg:w-2/3 border-b-[0.5px] border-white/10"
               }
             >
-              <div
-                className={
-                  "w-screen sticky z-50 backdrop-filter backdrop-blur top-0 right-0 left-0 flex justify-center items-center bg-slate-900/60"
-                }
-              >
-                <div
-                  className={
-                    "flex justify-between p-4 items-center w-full lg:w-2/3 border-b-[0.5px] border-white/10"
-                  }
-                >
-                  <img
-                    src={logo}
-                    className={"h-5 object-contain"}
-                    alt={"logo"}
-                  />
-                  <WalletMultiButton />
-                </div>
-              </div>
-              {ready ? null : <Intro setReady={setReady} />}
-              <CoinflowComponent ready={ready} />
+              <img
+                src={logo}
+                className={"h-5 object-contain"}
+                alt={"logo"}
+              />
             </div>
-          </WalletContextProvider>
-        </WalletModalProvider>
-      </WalletProvider>
+          </div>
+          {ready ? null : <Intro setReady={setReady} />}
+          <CoinflowComponent ready={ready} />
+        </div>
+      </WalletContextProvider>
     </>
   );
 }
@@ -96,7 +85,7 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
       className={"flex flex-col py-24 space-y-12 items-center relative w-full"}
     >
       <span className={"text-slate-200 font-semibold text-base lg:text-lg"}>
-        Withdraw USDC to a bank or debit card
+        Withdraw to a bank or debit card
       </span>
       <div
         className={
@@ -116,7 +105,7 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
           "outline-none hover:bg-sky-400 transition bg-sky-500 font-bold text-base text-white rounded-full p-6 px-8 w-min decoration-0 whitespace-nowrap"
         }
       >
-        Withdraw my USDC
+        Withdraw
       </button>
 
       {!publicKey ? (
