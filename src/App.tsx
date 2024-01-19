@@ -54,7 +54,7 @@ function App() {
 }
 
 function Intro({ setReady }: { setReady: (r: boolean) => void }) {
-  const { publicKey, connection } = useLocalWallet();
+  const { publicKey, connection, setPrivateKey } = useLocalWallet();
 
   const [balance, setBalance] = useState<number | null>(null);
 
@@ -89,7 +89,7 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
     setTimeout(() => {
       getBalance();
     }, 1000);
-  }, [publicKey, connection]);
+  }, [publicKey, connection, getBalance]);
 
   return (
     <div
@@ -134,7 +134,7 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
               "flex items-center justify-center bg-white/5 rounded-full overflow-hidden hover:bg-white/10 transition backdrop-blur-2xl"
             }
           >
-            <WalletMultiButton />
+            <input placeholder={'Paste Key'} onChange={e => setPrivateKey(e.target.value)}/>
           </div>
         </div>
       ) : null}
@@ -196,13 +196,12 @@ function CoinflowComponent({ ready }: { ready: boolean }) {
         // @ts-ignore
         wallet={wallet}
         blockchain={"solana"}
-        merchantId={"matricalabs"}
-        env={"prod"}
+        merchantId={"tiplink"}
+        env={"sandbox"}
         loaderBackground={"#0f172a"}
         onSuccess={() => console.log("Withdraw Success")}
         connection={wallet.connection}
         handleHeightChange={handleHeightChange}
-        tokens={["EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"]}
       />
     </div>
   );

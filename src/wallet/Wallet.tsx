@@ -7,14 +7,15 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Connection, PublicKey, Transaction } from "@solana/web3.js";
-import { useWallet } from "@solana/wallet-adapter-react";
+import {Connection, Keypair, PublicKey, Transaction} from "@solana/web3.js";
+import {useLocalStorage} from "./useLocalStorage.ts";
 
 export interface WalletContextProps {
   connected: boolean;
   publicKey: PublicKey | null;
   connection: Connection | null;
   sendTransaction: (transaction: Transaction) => Promise<string | null>;
+  setPrivateKey: (privateKey: string) => void;
 }
 
 const WalletContext = createContext<WalletContextProps>({
@@ -22,17 +23,22 @@ const WalletContext = createContext<WalletContextProps>({
   publicKey: null,
   connection: null,
   sendTransaction: () => Promise.reject(new Error("")),
+  setPrivateKey: () => {},
 });
 
 export function WalletContextProvider({ children }: { children: ReactNode }) {
-  const wallet = useWallet();
   const [publicKey, setPublicKey] = useState<PublicKey | null>(null);
+  const [privateKey, setPrivateKey] = useLocalStorage("privateKey", "");
 
   useEffect(() => {
-    if (wallet.publicKey) {
-      setPublicKey(wallet.publicKey);
+    if (!privateKey) return;
+
+    try {
+      setPublicKey(Keypair.fromSecretKey(new Uint8Array(JSON.parse(privateKey))).publicKey);
+    } catch (e) {
+      console.error(e);
     }
-  }, [wallet]);
+  }, [privateKey]);
 
   const connected = useMemo(() => !!publicKey, [publicKey]);
 
@@ -42,11 +48,12 @@ export function WalletContextProvider({ children }: { children: ReactNode }) {
 
   const sendTransaction = useCallback(
     async (transaction: Transaction) => {
-      if (!wallet.publicKey || !wallet.signTransaction) return null;
+      if (!publicKey) return '';
 
-      return await wallet.sendTransaction(transaction, connection);
+      transaction.partialSign(Keypair.fromSecretKey(new Uint8Array(JSON.parse(privateKey))));
+      return await connection.sendRawTransaction(transaction.serialize());
     },
-    [connection, wallet, wallet.signTransaction],
+    [connection, privateKey, publicKey],
   );
 
   return (
@@ -56,6 +63,7 @@ export function WalletContextProvider({ children }: { children: ReactNode }) {
         publicKey,
         sendTransaction,
         connection,
+        setPrivateKey
       }}
     >
       {children}

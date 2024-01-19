@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: usdc-matrica-offramp
+    name: teleport-offramp
     env: static
     branch: main
     buildCommand: npm install && npm run build
