@@ -114,7 +114,7 @@ function Intro({ setReady }: { setReady: (r: boolean) => void }) {
             "absolute top-0 bottom-0 right-0 left-0 backdrop-blur-2xl bg-slate-900/50 space-y-6 flex flex-col items-center justify-center"
           }
         >
-          <img src={usdcLogo} alt={"usdc"} className={"h-12 w-12"} />
+          <img src={logo} alt={"usdc"} className={"h-24"} />
           <span className={"text-slate-200 font-semibold text-base"}>
             Welcome. Connect your wallet to get started.
           </span>
