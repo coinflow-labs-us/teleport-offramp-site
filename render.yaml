@@ -4,7 +4,9 @@ services:
     env: static
     branch: main
     buildCommand: npm install && npm run build
-    staticPublishPath: build
+    staticPublishPath: dist
+    domains:
+      - teleport.coinflow.cash
     routes:
       - type: rewrite
         source: /*
